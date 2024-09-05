@@ -13,6 +13,7 @@ import {
   updateFirebaseUserDocument,
   uploadFirebaseImage,
 } from "../firebase/firebase.tsx";
+import Spinner from "@/components/ui/spinner.tsx";
 
 export interface IAuthUser {
   uid: string;
@@ -109,7 +110,11 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
   }
 
   if (loading) {
-    return <div>Loading...</div>;
+    return (
+      <div className="h-screen flex items-center justify-center">
+        <Spinner />
+      </div>
+    );
   }
 
   return (
