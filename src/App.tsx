@@ -14,74 +14,71 @@ import { useUserContext } from "./context/UserProvider.tsx";
 
 export default function App() {
   const { user } = useUserContext();
-
   const { navigateHome, navigateToProfile, navigateToPreview } =
     useAppNavigation();
 
+  if (user === null) {
+    return (
+      <Routes>
+        <Route
+          path="/"
+          element={
+            <SignIn
+              onSignInSuccess={() => {
+                navigateHome();
+              }}
+            />
+          }
+        />
+        <Route
+          path="signup"
+          element={
+            <SignUp
+              onSignUpSuccess={() => {
+                navigateHome();
+              }}
+            />
+          }
+        />
+      </Routes>
+    );
+  }
+
   return (
-    <>
-      <NotificationProvider>
-        <LinksProvider>
-          <div className="bg-dark-lighter h-screen">
-            <Routes>
-              {user === null ? (
-                <>
-                  <Route
-                    path="/"
-                    element={
-                      <SignIn
-                        onSignInSuccess={() => {
-                          navigateHome();
-                        }}
-                      />
-                    }
-                  />
-                  <Route
-                    path="signup"
-                    element={
-                      <SignUp
-                        onSignUpSuccess={() => {
-                          navigateHome();
-                        }}
-                      />
-                    }
-                  />
-                </>
-              ) : (
-                <>
-                  <Route
-                    path="/"
-                    element={
-                      <Navigation
-                        onLinksClick={() => {
-                          navigateHome();
-                        }}
-                        onProfileClick={() => {
-                          navigateToProfile();
-                        }}
-                        onSignOutBtn={() => {
-                          navigateHome();
-                          signOutUser();
-                        }}
-                        onSignInBtn={() => {
-                          navigateHome();
-                        }}
-                        onPreviewBtn={() => {
-                          navigateToPreview();
-                        }}
-                      />
-                    }
-                  >
-                    <Route index element={<LinksBuilder />} />
-                    <Route path="profile" element={<ProfileDetails />} />
-                  </Route>
-                  <Route path="preview" element={<Preview />} />
-                </>
-              )}
-            </Routes>
-          </div>
-        </LinksProvider>
-      </NotificationProvider>
-    </>
+    <NotificationProvider>
+      <LinksProvider>
+        <div className="bg-dark-lighter h-screen">
+          <Routes>
+            <Route
+              path="/"
+              element={
+                <Navigation
+                  onLinksClick={() => {
+                    navigateHome();
+                  }}
+                  onProfileClick={() => {
+                    navigateToProfile();
+                  }}
+                  onSignOutBtn={() => {
+                    navigateHome();
+                    signOutUser();
+                  }}
+                  onSignInBtn={() => {
+                    navigateHome();
+                  }}
+                  onPreviewBtn={() => {
+                    navigateToPreview();
+                  }}
+                />
+              }
+            >
+              <Route index element={<LinksBuilder />} />
+              <Route path="profile" element={<ProfileDetails />} />
+            </Route>
+            <Route path="preview" element={<Preview />} />
+          </Routes>
+        </div>
+      </LinksProvider>
+    </NotificationProvider>
   );
 }

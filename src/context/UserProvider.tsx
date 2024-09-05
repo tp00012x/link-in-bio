@@ -49,17 +49,20 @@ export const UserContext = createContext<{
 
 export const UserProvider = ({ children }: { children: ReactNode }) => {
   const [user, setUser] = useState<IUser | null>(null);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     return onAuthStateChangedListener(async (authUser: IAuthUser | null) => {
       const isLoggedOut = authUser === null;
       if (isLoggedOut) {
         setUser(null);
+        setLoading(false);
         return;
       }
 
       const userData = await getOrCreateFirebaseUserDocument(authUser);
       setUser(userData);
+      setLoading(false);
     });
   }, []);
 
@@ -103,6 +106,10 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
     if (!user) return;
 
     updateFirebaseUserDocument(user.uid, { ...user });
+  }
+
+  if (loading) {
+    return <div>Loading...</div>;
   }
 
   return (
