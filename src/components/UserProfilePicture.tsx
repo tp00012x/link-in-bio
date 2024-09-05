@@ -1,7 +1,7 @@
 import { useUserContext } from "../context/UserProvider.tsx";
 import blankProfile from "../assets/blank-profile.webp";
 
-export default function LinksProfilePicture() {
+export default function UserProfilePicture() {
   const { user } = useUserContext();
 
   if (!user) {

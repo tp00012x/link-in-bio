@@ -1,6 +1,6 @@
 import { useUserContext } from "../context/UserProvider.tsx";
 
-export default function LinksInformation() {
+export default function UserInformation() {
   const { user } = useUserContext();
 
   if (!user) {

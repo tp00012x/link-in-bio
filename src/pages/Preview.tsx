@@ -2,8 +2,8 @@ import Links from "../components/Links.tsx";
 import clipboard from "../assets/icon-link-copied-to-clipboard.svg";
 import { useNotificationContext } from "../context/NotificationProvider.tsx";
 import useAppNavigation from "../hooks/useAppNavigation.ts";
-import LinksProfilePicture from "../components/LinksProfilePicture.tsx";
-import LinksInformation from "../components/LinksInformation.tsx";
+import UserProfilePicture from "../components/UserProfilePicture.tsx";
+import UserInformation from "../components/UserInformation.tsx";
 
 function PreviewNavigation() {
   const { setNotification } = useNotificationContext();
@@ -50,8 +50,8 @@ export default function Preview() {
           <PreviewNavigation />
           <div className="absolute flex justify-center mt-40 items-center bg-white h-[620px] w-[349px] rounded-3xl shadow-2xl p-9">
             <div className="flex flex-col items-center w-full">
-              <LinksProfilePicture />
-              <LinksInformation />
+              <UserProfilePicture />
+              <UserInformation />
               <Links />
             </div>
           </div>

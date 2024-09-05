@@ -11,6 +11,7 @@ import {
   updateFirebaseLinkDocument,
 } from "../firebase/firebase.tsx";
 import { useUserContext } from "./UserProvider.tsx";
+import Spinner from "@/components/ui/spinner.tsx";
 
 export interface ILink {
   platform: IPlatform | null;
@@ -40,13 +41,19 @@ export const LinksContext = createContext<{
 });
 
 export default function LinksProvider({ children }: { children: ReactNode }) {
-  const [links, setLinks] = useState<ILink[]>([]);
   const { user } = useUserContext();
+
+  const [links, setLinks] = useState<ILink[]>([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     async function loadFirebaseLinks() {
-      if (!user) return;
+      if (!user) {
+        setLoading(false);
+        return;
+      }
       const data = await getFirebaseLinksDocument(user?.uid);
+      setLoading(false);
       setLinks(data?.links || []);
     }
     loadFirebaseLinks();
@@ -96,6 +103,14 @@ export default function LinksProvider({ children }: { children: ReactNode }) {
     if (!user) return;
 
     updateFirebaseLinkDocument(user.uid, { links: links });
+  }
+
+  if (loading) {
+    return (
+      <div className="h-screen flex items-center justify-center">
+        <Spinner />
+      </div>
+    );
   }
 
   return (

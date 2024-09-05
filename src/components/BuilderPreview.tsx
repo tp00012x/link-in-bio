@@ -1,7 +1,7 @@
 import Links from "./Links.tsx";
 import { useUserContext } from "../context/UserProvider.tsx";
-import LinksProfilePicture from "./LinksProfilePicture.tsx";
-import LinksInformation from "./LinksInformation.tsx";
+import UserProfilePicture from "./UserProfilePicture.tsx";
+import UserInformation from "./UserInformation.tsx";
 import { useLinksContext } from "../context/LinksProvider.tsx";
 
 function PreviewLinkSkeleton() {
@@ -31,9 +31,9 @@ export default function BuilderPreview() {
       <div className="mx-auto border-gray-800 dark:border-gray-800 border rounded-[2.5rem] h-[580px] w-[280px]">
         <div className="mt-2.5 mx-auto border-gray-800 dark:border-gray-800 border rounded-[2rem] h-[560px] w-[260px]">
           <div className="flex flex-col justify-center items-center p-6">
-            <LinksProfilePicture />
+            <UserProfilePicture />
             {firstName || lastName || email ? (
-              <LinksInformation />
+              <UserInformation />
             ) : (
               <>
                 <div className="mt-6" />
