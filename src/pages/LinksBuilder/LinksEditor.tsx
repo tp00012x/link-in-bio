@@ -22,7 +22,7 @@ export function LinksEditor() {
   return (
     <div className="h-screen overflow-y-auto">
       <div className="text-xl text-dark font-semibold">
-        Customize your links (anthony)
+        Customize your links
       </div>
       <div className="text-sm text-dark-med py-4">
         Add/edit/remove links below and them share all your profiles with the
