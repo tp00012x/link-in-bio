@@ -18,5 +18,5 @@ test("logging in", async ({ page }) => {
     })
     .click();
 
-  await expect(page.getByText("Customize your links")).toBeVisible();
+  await expect(page.getByText("Customize your linkldkjslkjs")).toBeVisible();
 });
