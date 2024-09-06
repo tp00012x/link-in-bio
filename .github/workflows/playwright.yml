@@ -1,14 +1,15 @@
-name: Playwright Tests
+name: Test and Deploy
 
 on:
   push:
-    branches: [ main, master ]
+    branches:
+      - main  # Ensure this runs only on specific branches (like main)
   pull_request:
-    branches: [ main, master ]
+    branches:
+      - main
 
 jobs:
   test:
-    timeout-minutes: 60
     runs-on: ubuntu-latest
 
     steps:
@@ -62,16 +63,23 @@ jobs:
           VITE_FIREBASE_APP_ID=${{ secrets.VITE_FIREBASE_APP_ID }} \
           VITE_FIREBASE_MEASUREMENT_ID=${{ secrets.VITE_FIREBASE_MEASUREMENT_ID }} \
           npx playwright test
-        env:
-          NODE_ENV: production
 
-      - uses: actions/upload-artifact@v4
-        if: always()
+      - name: Upload test report (if failure)
+        if: failure()
+        uses: actions/upload-artifact@v4
         with:
           name: playwright-report
           path: playwright-report/
           retention-days: 30
 
-      - name: Display Vite server logs if it fails
-        if: failure()
-        run: cat vite.log
+  deploy:
+    needs: test
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Deploy to Vercel
+        run: vercel --prod  # This triggers the Vercel deployment
+        env:
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}  # Add your Vercel token as a secret
