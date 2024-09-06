@@ -3,7 +3,7 @@ name: Test and Deploy
 on:
   push:
     branches:
-      - main  # Ensure this runs only on specific branches (like main)
+      - main
   pull_request:
     branches:
       - main
@@ -80,6 +80,6 @@ jobs:
       - uses: actions/checkout@v4
 
       - name: Deploy to Vercel
-        run: vercel --prod  # This triggers the Vercel deployment
+        run: vercel --prod
         env:
-          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}  # Add your Vercel token as a secret
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
